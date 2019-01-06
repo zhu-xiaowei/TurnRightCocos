@@ -70,7 +70,9 @@ cc.Class({
         var g = this.getComponent(cc.Graphics);
 
         g.lineWidth = 0;
-        g.fillColor.fromHEX('#78A687');
+        // g.fillColor.fromHEX('#78A687');
+        g.fillColor=this._fullColor;
+
         var width = this.node.width;
         var height = this.node.height;
         // round rect
