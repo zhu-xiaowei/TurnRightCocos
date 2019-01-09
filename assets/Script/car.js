@@ -29,6 +29,6 @@ cc.Class({
     },
 
     update(dt) {
-        this.node.y += this.startSpeed * dt;
+        
     },
 });

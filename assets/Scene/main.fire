@@ -41,9 +41,9 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.5278031643091571,
-      "y": 0.5278031643091571,
-      "z": 0.5278031643091571
+      "x": 0.22973967099940687,
+      "y": 0.22973967099940687,
+      "z": 0.22973967099940687
     },
     "_quat": {
       "__type__": "cc.Quat",
@@ -301,7 +301,9 @@
     },
     "_enabled": true,
     "alignMode": 1,
-    "_target": null,
+    "_target": {
+      "__id__": 2
+    },
     "_alignFlags": 45,
     "_left": 0,
     "_right": 0,
@@ -397,7 +399,7 @@
     "_position": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 0,
+      "y": 60,
       "z": 0
     },
     "_scale": {
@@ -605,7 +607,7 @@
     "_position": {
       "__type__": "cc.Vec3",
       "x": -274,
-      "y": -395,
+      "y": -222,
       "z": 0
     },
     "_scale": {
@@ -729,10 +731,10 @@
     "_enabled": true,
     "alignMode": 1,
     "_target": null,
-    "_alignFlags": 18,
+    "_alignFlags": 1,
     "_left": 0,
     "_right": 0,
-    "_top": -60,
+    "_top": 162,
     "_bottom": 0,
     "_verticalCenter": 0,
     "_horizontalCenter": 0,
@@ -771,11 +773,17 @@
       "__id__": 2
     },
     "_enabled": true,
+    "mCanvas": {
+      "__id__": 2
+    },
     "outRect": {
       "__id__": 8
     },
     "innerRect": {
       "__id__": 9
+    },
+    "car": {
+      "__id__": 13
     },
     "_id": "c8bqz6V4lI754hNhhayz37"
   }
