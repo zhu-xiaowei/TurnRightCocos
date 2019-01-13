@@ -61,11 +61,10 @@ cc.Class({
     },
 
 
-
     //获取初始位置
     getStartPosition: function () {
         var x = this.innerRect.x - this.innerRect.width / 2 - (this.outRect.width - this.innerRect.width) / 4;
-        var y = this.innerRect.y - this.innerRect.height / 2 + this.car.height / 2;
+        var y = this.innerRect.y - this.innerRect.height / 2 + this.car.height / 2+2
         return cc.v2(x, y);
     },
 
@@ -90,6 +89,12 @@ cc.Class({
                 this.car.y += this.speed * dt * Math.cos(-this.car.angle / 180 * Math.PI);
             }
         }
+    },
+
+
+    //游戏结束
+    onGameOver: function () {
+        this.car.onDestroy;
     },
 
 
