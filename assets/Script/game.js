@@ -28,7 +28,7 @@ cc.Class({
 
     initGame: function () {
         //汽车速度
-        this.speed = 800;
+        this.speed = 400;
         //拐弯半径
         this.raduis = this.innerRect.width / 2 + (this.outRect.width - this.innerRect.width) / 4;
         //旋转速度(画圆)

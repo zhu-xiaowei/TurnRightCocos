@@ -11,29 +11,37 @@ cc.Class({
         cc.director.getCollisionManager().enabled = true;
         cc.director.getCollisionManager().enabledDebugDraw = false;
         //计算出边界y值
-        this.topY = this.node.y + this.node.parent.height / 2 + this.node.height / 2 - this.node.width / 2;
-        this.bottomY = this.node.y + this.node.parent.height / 2 - this.node.height / 2 + this.node.width / 2;
+        this.topY = this.node.height / 2 - this.node.width / 2;
+        this.bottomY = - this.node.height / 2 + this.node.width / 2;
+        console.log("topY：" + this.topY + " bottomY：" + this.bottomY);
     },
 
     //碰撞出去 1和 3
     onCollisionExit: function (other, self) {
-        var world = self.world;
-        if (self.tag == 1 && other.node.y > this.node.y) {
-            if(other.node.angle % 360 > -90){
-                //向上
-                console.log("顶部碰撞：");
-            }else{
-                //向下
-                // if()
+        //碰撞到上面的圆形
+        if (self.tag == 1 && other.node.y > 0) {
+            console.log("other.node.x：" + other.node.x + "  self.node.x：" + self.node.x);
+            if (other.node.x < 0) {
+                //在左侧一定是碰撞
+                console.log("顶部左侧碰撞");
+            } else {
+                if (other.node.y > this.topY) {
+                    console.log("顶部右侧碰撞");
+                }
             }
-            // && world.position.y >= this.topY
-            console.log("顶部碰撞：");
         }
-        // if (self.tag == 3 && world.position.y <= this.bottomY) {
-        //     console.log("底部碰撞："+world.position);
-        //     console.log("bottomY is:"+this.bottomY);
-        //     console.log(world.position.y <= this.bottomY);
-        // }
+        //碰撞到底部的圆形
+        if (self.tag == 3 && other.node.y < 0) {
+            console.log("other.node.x：" + other.node.x + "  self.node.x：" + self.node.x);
+            if (other.node.x > 0) {
+                //在左侧一定是碰撞
+                console.log("底部右侧碰撞");
+            } else {
+                if (other.node.y < this.bottomY) {
+                    console.log("底部左侧碰撞");
+                }
+            }
+        }
 
     },
 
