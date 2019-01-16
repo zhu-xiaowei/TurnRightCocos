@@ -13,7 +13,6 @@ cc.Class({
     },
 
     onCollisionEnter: function (other) {
-        console.log("汽车碰到内壁");
         this.game.onGameOver();
     },
 

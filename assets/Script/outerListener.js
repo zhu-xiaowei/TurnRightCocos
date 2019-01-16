@@ -16,15 +16,10 @@ cc.Class({
 
         //半径的平方
         this.r2 = this.node.width * this.node.width / 4;
+        //计算两个圆心坐标
         this.radiusX = this.node.parent.width / 2;
-
         this.radiusY1 = this.node.parent.height / 2 + this.node.y + this.topY;
         this.radiusY2 = this.node.parent.height / 2 + this.node.y - this.topY;
-    },
-
-    //碰撞出去 1和 3
-    onCollisionExit: function (other, self) {
-
     },
 
     onCollisionStay: function (other, self) {
@@ -32,12 +27,10 @@ cc.Class({
         var world = other.world;
         //碰撞到上面的圆形
         if (self.tag === 1 && other.node.y > this.topY - other.node.height / 2) {
-            console.log(world);
             if (this.isCollision(world.points, 1)) {
                 this.game.onGameOver();
             }
         } else if (self.tag === 3 && other.node.y < this.bottomY + other.node.height / 2) {
-            console.log(world);
             if (this.isCollision(world.points, 2)) {
                 this.game.onGameOver();
             }
@@ -45,16 +38,15 @@ cc.Class({
     },
 
 
-    //碰撞进入 tag 0和2是肯定是碰到了
+    //碰撞进入 tag 0和2是肯定是碰到了侧面
     onCollisionEnter: function (other, self) {
-
         if (self.tag === 0 || self.tag === 2) {
             this.onCarCollision();
-            console.log("侧面碰撞");
         }
     },
 
 
+    //检测到碰撞
     onCarCollision: function () {
         this.game.onGameOver();
     },
@@ -64,7 +56,6 @@ cc.Class({
         //只判断左边的点即可
         var length = array.length / 2;
         if (tag === 1) {
-            //上圆
             for (var i = 0; i < length; i++) {
                 var dx = array[i].x - this.radiusX, dy = array[i].y - this.radiusY1
                 if (array[i].y > this.radiusY1 && dx * dx + dy * dy > this.r2) {

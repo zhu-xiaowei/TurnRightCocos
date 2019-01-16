@@ -10,6 +10,15 @@ cc.Class({
             default: null,
             type: cc.Node
         },
+        scoreLine: {
+            default: null,
+            type: cc.Node
+        },
+        //显示分数Label
+        scoreDisplay: {
+            default: null,
+            type: cc.Label
+        },
         innerRect: {
             default: null,
             type: cc.Node
@@ -29,6 +38,9 @@ cc.Class({
     initGame: function () {
         //是否开始游戏
         this.Playing = false;
+        this.scoreDisplay.string = 0;
+        this.score = 0;
+
         //汽车速度
         this.speed = 400;
         //拐弯半径
@@ -47,27 +59,31 @@ cc.Class({
         this.isTouch = false;
         //初始化出生位置
         this.car.setPosition(this.getStartPosition());
+        this.car.angle = 0;
         //触摸 
-        this.mCanvas.on(cc.Node.EventType.TOUCH_START, function (event) {
-            //触摸位置在矩形的下部
-            if (event.getLocationY() - this.mCanvas.height / 2 < this.outRect.y) {
-                //按下时清零漂移时间
-                this.shiftAngle = this.car.angle;
-                this.isTouch = true;
-            }
-        }, this)//this不能少!
-        //抬起
-        this.mCanvas.on(cc.Node.EventType.TOUCH_END, function (event) {
-            if (!this.Playing) {
-                this.Playing = true;
-            }
-            this.isTouch = false;
-        }, this)//this不能少!
+        this.node.on(cc.Node.EventType.TOUCH_START, this.eventDown, this);
+        this.node.on(cc.Node.EventType.TOUCH_END, this.eventUp, this);
 
         //绑定game到碰撞监听器
         this.innerRect.getComponent('innerListener').game = this;
         this.outRect.getComponent('outerListener').game = this;
+        this.scoreLine.getComponent('scoreListener').game = this;
         // this.outRect.getComponent('outerListener').canvas = this.mCanvas;
+    },
+
+    eventDown: function (event) {
+        //触摸位置在矩形的下部
+        if (event.getLocationY() - this.mCanvas.height / 2 < this.outRect.y) {
+            //按下时清零漂移时间
+            this.shiftAngle = this.car.angle;
+            this.isTouch = true;
+        }
+    },
+    eventUp: function (event) {
+        if (!this.Playing) {
+            this.Playing = true;
+        }
+        this.isTouch = false;
     },
 
 
@@ -80,7 +96,6 @@ cc.Class({
 
     //更新汽车位置和方向实现漂移和甩尾
     update: function (dt) {
-        if (this.car.y > this.outRect.height / 2) return;
         if (!this.Playing) return;
         if (this.isTouch) {
             //汽车按照漂移角度旋转
@@ -104,17 +119,28 @@ cc.Class({
     },
 
 
+    onGainScore: function () {
+        this.score++;
+        this.scoreDisplay.string = this.score
+    },
+
     //游戏结束
     onGameOver: function () {
         this.Playing = false;
-        console.log("游戏结束")
-        this.car.onDestroy;
+        this.removeListener();
+        this.scheduleOnce(function () {
+            this.initGame();
+        }, 1);
     },
 
 
     //移除监听
     onDestroy: function () {
-        this.Node.off(cc.Node.EventType.TOUCH_START, this);
-        this.Node.off(cc.Node.EventType.TOUCH_END, this);
+        this.removeListener();
+    },
+
+    removeListener: function () {
+        this.node.off(cc.Node.EventType.TOUCH_START, this.eventDown, this);
+        this.node.off(cc.Node.EventType.TOUCH_END, this.eventUp, this);
     },
 });

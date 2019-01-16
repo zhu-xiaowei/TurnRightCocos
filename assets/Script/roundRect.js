@@ -11,42 +11,18 @@ cc.Class({
     },
 
     properties: {
-        _radiu: 0,
-        _width: 0,
-        _height: 0,
+        _orientation: 0,//0竖直，1水平
         _fullColor: cc.color(),
-        radiu: {
-            type: cc.Float,
+        orientation: {
+            type: cc.Integer,
             get: function () {
-                return this._radiu;
+                return this._orientation;
             },
             set: function (val) {
-                this._radiu = val;
+                this._orientation = val;
                 this._refreshRect();
             },
-            tooltip: "半径"
-        },
-        width: {
-            type: cc.Float,
-            get: function () {
-                return this._width;
-            },
-            set: function (val) {
-                this._width = val;
-                this._refreshRect();
-            },
-            tooltip: "宽度"
-        },
-        height: {
-            type: cc.Float,
-            get: function () {
-                return this._height;
-            },
-            set: function (val) {
-                this._height = val;
-                this._refreshRect();
-            },
-            tooltip: "高度"
+            tooltip: "方向"
         },
         fullColor: {
             type: cc.Color,
@@ -76,7 +52,12 @@ cc.Class({
         var width = this.node.width;
         var height = this.node.height;
         // round rect
-        g.roundRect(-width / 2, -height / 2, width, height, width / 2);
+        if(this._orientation==0){
+            g.roundRect(-width / 2, -height / 2, width, height, width / 2);
+        }else{
+            g.roundRect(-width / 2, -height / 2, width, height, height / 2);
+        }
+      
         g.stroke();
         g.fill();
     },
