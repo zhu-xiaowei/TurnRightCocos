@@ -22,13 +22,21 @@ cc.Class({
 
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {},
+    onLoad() {
+       
+    },
 
     start() {
 
     },
 
     update(dt) {
-        
+
+
+        //计算是否碰撞到外部的圆弧
+
     },
+
+
+
 });

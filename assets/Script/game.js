@@ -27,6 +27,8 @@ cc.Class({
 
 
     initGame: function () {
+        //是否开始游戏
+        this.Playing = false;
         //汽车速度
         this.speed = 400;
         //拐弯半径
@@ -56,20 +58,30 @@ cc.Class({
         }, this)//this不能少!
         //抬起
         this.mCanvas.on(cc.Node.EventType.TOUCH_END, function (event) {
+            if (!this.Playing) {
+                this.Playing = true;
+            }
             this.isTouch = false;
         }, this)//this不能少!
+
+        //绑定game到碰撞监听器
+        this.innerRect.getComponent('innerListener').game = this;
+        this.outRect.getComponent('outerListener').game = this;
+        // this.outRect.getComponent('outerListener').canvas = this.mCanvas;
     },
 
 
     //获取初始位置
     getStartPosition: function () {
         var x = this.innerRect.x - this.innerRect.width / 2 - (this.outRect.width - this.innerRect.width) / 4;
-        var y = this.innerRect.y - this.innerRect.height / 2 + this.car.height / 2+2
+        var y = this.innerRect.y - this.innerRect.height / 2 + this.car.height / 2 + 2
         return cc.v2(x, y);
     },
 
     //更新汽车位置和方向实现漂移和甩尾
     update: function (dt) {
+        if (this.car.y > this.outRect.height / 2) return;
+        if (!this.Playing) return;
         if (this.isTouch) {
             //汽车按照漂移角度旋转
             this.car.angle -= this.angleShiftSpeed * dt;
@@ -94,6 +106,8 @@ cc.Class({
 
     //游戏结束
     onGameOver: function () {
+        this.Playing = false;
+        console.log("游戏结束")
         this.car.onDestroy;
     },
 
