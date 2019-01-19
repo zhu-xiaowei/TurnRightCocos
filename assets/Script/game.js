@@ -61,7 +61,9 @@ cc.Class({
         //绑定game到碰撞监听器
         this.innerRect.getComponent('innerListener').game = this;
         this.outRect.getComponent('outerListener').game = this;
-        this.scoreLine.getComponent('scoreListener').game = this;
+        this.scoreLine.getComponent('scoreLine').game = this;
+        this.scoreLine.getComponent('scoreLine').initScoreLine();
+
         //显示开始游戏文字
         if(this.firstInit){
             this.startText = cc.instantiate(this.starTextPrefab);

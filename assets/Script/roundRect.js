@@ -40,13 +40,25 @@ cc.Class({
     // onLoad () {},
 
     onLoad() {
+        this.originW = this.node.width;
+        this.originH = this.node.height;
+        this.drawRoundRect();
+    },
+    update(dt) {
+        if (this.node.height != this.originH || this.node.width != this.originW) {
+            this.drawRoundRect();
+        }
+
+    },
+
+    drawRoundRect: function () {
         var g = this.getComponent(cc.Graphics);
+        g.clear();
         g.lineCap = cc.Graphics.LineCap.BUTT;
         g.lineJoin = cc.Graphics.LineJoin.BUTT
         g.lineWidth = 0;
         // g.fillColor.fromHEX('#78A687');
         g.fillColor = this._fullColor;
-
         var width = this.node.width;
         var height = this.node.height;
         if (this._orientation == 0) {
@@ -57,5 +69,4 @@ cc.Class({
         g.stroke();
         g.fill();
     },
-    // update (dt) {},
 });
