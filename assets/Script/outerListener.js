@@ -8,12 +8,15 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
+        //不能在onload里面初始化  node.y未初始化
+    },
+
+    init() {
         cc.director.getCollisionManager().enabled = true;
         cc.director.getCollisionManager().enabledDebugDraw = false;
         //计算出边界y值
         this.topY = this.node.height / 2 - this.node.width / 2;
         this.bottomY = - this.node.height / 2 + this.node.width / 2;
-
         //半径的平方
         this.r2 = this.node.width * this.node.width / 4;
         //计算两个圆心坐标
@@ -22,8 +25,9 @@ cc.Class({
         this.radiusY2 = this.node.parent.height / 2 + this.node.y - this.topY;
     },
 
+
     onCollisionStay: function (other, self) {
-        if (!this.game.Playing) return;
+        if (this.game.gameStatus !== 1) return;
         var world = other.world;
         //碰撞到上面的圆形
         if (self.tag === 1 && other.node.y > this.topY - other.node.height / 2) {

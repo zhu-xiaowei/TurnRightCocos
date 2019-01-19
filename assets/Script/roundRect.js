@@ -20,7 +20,6 @@ cc.Class({
             },
             set: function (val) {
                 this._orientation = val;
-                this._refreshRect();
             },
             tooltip: "方向"
         },
@@ -31,8 +30,6 @@ cc.Class({
             },
             set: function (val) {
                 this._fullColor = val;
-
-                this._refreshRect();
             },
             tooltip: "填充颜色"
         }
@@ -44,20 +41,19 @@ cc.Class({
 
     onLoad() {
         var g = this.getComponent(cc.Graphics);
-
+        g.lineCap = cc.Graphics.LineCap.BUTT;
+        g.lineJoin = cc.Graphics.LineJoin.BUTT
         g.lineWidth = 0;
         // g.fillColor.fromHEX('#78A687');
-        g.fillColor=this._fullColor;
+        g.fillColor = this._fullColor;
 
         var width = this.node.width;
         var height = this.node.height;
-        // round rect
-        if(this._orientation==0){
+        if (this._orientation == 0) {
             g.roundRect(-width / 2, -height / 2, width, height, width / 2);
-        }else{
+        } else {
             g.roundRect(-width / 2, -height / 2, width, height, height / 2);
         }
-      
         g.stroke();
         g.fill();
     },

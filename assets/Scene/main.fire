@@ -41,9 +41,9 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.294873046875,
-      "y": 0.294873046875,
-      "z": 0.294873046875
+      "x": 0.29539388020833335,
+      "y": 0.29539388020833335,
+      "z": 0.29539388020833335
     },
     "_quat": {
       "__type__": "cc.Quat",
@@ -55,7 +55,7 @@
     "_zIndex": 0,
     "_is3DNode": true,
     "groupIndex": 0,
-    "autoReleaseAssets": false,
+    "autoReleaseAssets": true,
     "_id": "2d2f792f-a40c-49bb-a189-ed176a246e49"
   },
   {
@@ -539,7 +539,6 @@
       "b": 0,
       "a": 255
     },
-    "_lineJoin": 2,
     "_lineCap": 0,
     "_fillColor": {
       "__type__": "cc.Color",
@@ -750,7 +749,6 @@
       "b": 0,
       "a": 255
     },
-    "_lineJoin": 2,
     "_lineCap": 0,
     "_fillColor": {
       "__type__": "cc.Color",
@@ -913,9 +911,6 @@
       "__id__": 22
     },
     "_enabled": true,
-    "maxSpeed": 400,
-    "startSpeed": 400,
-    "direction": 0,
     "_id": "2fCPWqN31PnrgqSj1x+Qg8"
   },
   {
@@ -1188,7 +1183,6 @@
       "b": 0,
       "a": 255
     },
-    "_lineJoin": 2,
     "_lineCap": 0,
     "_fillColor": {
       "__type__": "cc.Color",
@@ -1236,7 +1230,6 @@
       "b": 0,
       "a": 255
     },
-    "_lineJoin": 2,
     "_lineCap": 0,
     "_fillColor": {
       "__type__": "cc.Color",
