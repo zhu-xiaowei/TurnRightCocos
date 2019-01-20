@@ -56,7 +56,7 @@ cc.Class({
     //更新汽车位置和方向实现漂移和甩尾
     update(dt) {
         if (this.game.gameStatus !== 1) {
-            this.startSpeed == 0;
+            this.startSpeed = 0;
             return;
         }
         if (this.startSpeed < this.speed) {

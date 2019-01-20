@@ -34,6 +34,6 @@ cc.Class({
 
 
 
-    update(dt) {
-    },
+    // update(dt) {
+    // },
 });

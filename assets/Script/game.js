@@ -47,6 +47,30 @@ cc.Class({
             default: null,
             type: cc.Node
         },
+        bestScoreLayout: {
+            default: null,
+            type: cc.Node
+        },
+        bestScoreTv: {
+            default: null,
+            type: cc.Node
+        },
+        rank: {
+            default: null,
+            type: cc.Node
+        },
+        stopImg: {
+            default: null,
+            type: cc.Node
+        },
+        startLayout: {
+            default: null,
+            type: cc.Node
+        },
+        startImg: {
+            default: null,
+            type: cc.Node
+        },
     },
 
     // use this for initialization
@@ -66,8 +90,7 @@ cc.Class({
 
     initGame: function () {
         this.gameStatus = 0;//-1 失败 0初始化 1正在运行，2暂停
-        this.baseScoreTv.string = 1;
-        this.totalScoreTv.string = 0;
+
         //基础得分
         this.baseScore = 1;
         //总得分
@@ -79,8 +102,10 @@ cc.Class({
         //连续perfect的次数
         this.perfectNumber = 0;
 
-        //更新进度条
-        this.updateCircleProgress();
+        //初始化关闭和隐藏
+        this.startLayout.active = false;
+        this.rank.active = true;
+
 
         //初始化car
         this.car.getComponent('car').game = this;
@@ -95,6 +120,8 @@ cc.Class({
         this.outRect.getComponent('outerListener').game = this;
         this.scoreLine.getComponent('scoreLine').game = this;
         this.progressCircle.getComponent('progressCircle').game = this;
+        this.stopImg.getComponent('stopImg').game = this;
+        this.startImg.getComponent('startImg').game = this;
         this.scoreLine.getComponent('scoreLine').initScoreLine();
 
         //显示开始游戏文字
@@ -139,11 +166,28 @@ cc.Class({
     eventUp: function (event) {
         if (this.gameStatus !== 1 && this.isTouchLower === true) {
             this.gameStatus = 1;
-            //隐藏开始游戏文字
-            this.startText.getComponent('startText').hide();
+            //开始游戏之前调用
+            this.initStartGame();
+
         }
         this.car.getComponent('car').onTouchUp();
     },
+
+    //正式开始游戏之前清除之前的记录
+    initStartGame: function () {
+        this.baseScoreTv.string = 1;
+        this.totalScoreTv.string = 0;
+        this.startText.getComponent('startText').hide();
+        //更新进度条
+        this.updateCircleProgress();
+        //显示暂停按钮
+        this.stopImg.getComponent('stopImg').listening();
+        //关闭排行显示
+        this.rank.active = false;
+        //关闭最高分显示
+        this.bestScoreLayout.active = false;
+    },
+
 
 
     //更新
@@ -168,13 +212,13 @@ cc.Class({
         //总分 = 基础分数 * percet次数
         this.totalScore += this.baseScore * (this.perfectNumber + 1);
         this.totalScoreTv.string = this.totalScore;
-      
+
         if (this.progress < this.baseScore) {
             //更新当前进度
             if (this.totalScore > 1) {
                 this.progress++;
                 this.updateCircleProgress();
-                if(this.progress==this.baseScore){
+                if (this.progress == this.baseScore) {
                     //进入下一轮
                     this.progress = 0;
                     this.baseScore++;
@@ -193,7 +237,25 @@ cc.Class({
     },
     //更新进度
     updateCircleProgress: function () {
-        this.progressCircle.getComponent('progressCircle').updateProgress(this.progress , this.baseScore);
+        this.progressCircle.getComponent('progressCircle').updateProgress(this.progress, this.baseScore);
+    },
+
+    //暂停游戏
+    stopGame: function () {
+        //停止游戏
+        this.gameStatus = 2;
+        //显示开始界面
+        this.startLayout.getComponent('startLayout').listening();
+        //开始监听
+        this.startImg.getComponent('startImg').listening();
+    },
+
+    //开始游戏
+    startGame: function () {
+        //开始游戏
+        this.gameStatus = 1;
+        //显示开始界面
+        this.startLayout.active = false;
     },
 
 
@@ -202,6 +264,8 @@ cc.Class({
         //这里需要移除触摸监听
         this.removeListener();
         this.gameStatus = -1;
+        //隐藏暂停
+        this.stopImg.getComponent('stopImg').hideStopImg();
         this.scheduleOnce(function () {
             this.initGame();
         }, 1);
