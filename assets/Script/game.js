@@ -55,7 +55,7 @@ cc.Class({
             default: null,
             type: cc.Node
         },
-        rank: {
+        rankImg: {
             default: null,
             type: cc.Node
         },
@@ -83,7 +83,8 @@ cc.Class({
         cc.view.enableAntiAlias(true);
         cc.macro.ENABLE_WEBGL_ANTIALIAS = true;
         cc.view.enableRetina(true);
-
+        //切换排行榜时当前场景不被销毁
+        cc.game.addPersistRootNode(this.node);
         //初始化游戏
         this.initGame();
     },
@@ -104,8 +105,6 @@ cc.Class({
 
         //初始化关闭和隐藏
         this.startLayout.active = false;
-        this.rank.active = true;
-
 
         //初始化car
         this.car.getComponent('car').game = this;
@@ -133,6 +132,8 @@ cc.Class({
             }, 0.2);
         }
         this.startText.getComponent('startText').show();
+        //排行榜出现
+        this.rankImg.getComponent('rankImg').listening();
     },
 
     //初始化开始游戏的文字
@@ -183,7 +184,7 @@ cc.Class({
         //显示暂停按钮
         this.stopImg.getComponent('stopImg').listening();
         //关闭排行显示
-        this.rank.active = false;
+        this.rankImg.getComponent('rankImg').hideRankImg();
         //关闭最高分显示
         this.bestScoreLayout.active = false;
     },
@@ -266,6 +267,7 @@ cc.Class({
         this.gameStatus = -1;
         //隐藏暂停
         this.stopImg.getComponent('stopImg').hideStopImg();
+        //显示排行榜
         this.scheduleOnce(function () {
             this.initGame();
         }, 1);

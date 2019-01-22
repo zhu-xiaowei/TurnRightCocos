@@ -10,7 +10,7 @@ cc.Class({
     listening: function () {
         this.node.active = true;
         var anim = this.getComponent(cc.Animation);
-        anim.play('showStopImg');
+        anim.play();
         this.node.on(cc.Node.EventType.TOUCH_START, this.eventDown, this);
         this.node.on(cc.Node.EventType.TOUCH_END, this.eventUp, this);
     },

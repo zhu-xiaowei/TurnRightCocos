@@ -1,6 +1,6 @@
 {
   "__type__": "cc.AnimationClip",
-  "_name": "hideStopImg",
+  "_name": "showStopImg",
   "_objFlags": 0,
   "_native": "",
   "_duration": 1,
@@ -12,11 +12,11 @@
       "opacity": [
         {
           "frame": 0,
-          "value": 255
+          "value": 0
         },
         {
           "frame": 1,
-          "value": 0
+          "value": 255
         }
       ]
     }

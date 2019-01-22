@@ -12,7 +12,8 @@
       "opacity": [
         {
           "frame": 0,
-          "value": 255
+          "value": 255,
+          "curve": "cubicOut"
         },
         {
           "frame": 1,

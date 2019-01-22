@@ -1,18 +1,28 @@
 cc.Class({
     extends: cc.Component,
 
-    load() {
-        this.node.active = true;
+    listening: function () {
+        if(this.node.opacity<255){
+            var anim = this.getComponent(cc.Animation);
+            anim.play();
+        }
         this.node.on(cc.Node.EventType.TOUCH_START, this.eventDown, this);
         this.node.on(cc.Node.EventType.TOUCH_END, this.eventUp, this);
+    },
+
+
+    hideRankImg: function () {
+        var anim = this.getComponent(cc.Animation);
+        anim.play('hideRankImg');
     },
 
     eventDown: function (event) {
         event.stopPropagation();
 
     },
+
     eventUp: function (event) {
         event.stopPropagation();
-        //调用排行版
+        cc.director.loadScene("RankingView");
     },
 });
