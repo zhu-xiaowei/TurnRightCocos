@@ -74,7 +74,7 @@ cc.Class({
         }
     },
 
-    submitScoreButtonFunc(score){
+    submitScoreButtonFunc(){
         let score = 123;
         if (CC_WECHATGAME) {
             window.wx.postMessage({

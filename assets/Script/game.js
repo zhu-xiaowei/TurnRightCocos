@@ -275,6 +275,8 @@ cc.Class({
         if (this.bestScore < this.totalScore) {
             this.bestScore = this.totalScore;
             this.storeBestScore(this.bestScore);
+            //通知开放数据域上传用户分数
+            this.submitScore(this.bestScore);
         }
 
         //显示排行榜
