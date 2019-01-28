@@ -3,7 +3,7 @@
   "_name": "hideStopImg",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 1,
+  "_duration": 0.5,
   "sample": 60,
   "speed": 1,
   "wrapMode": 1,
@@ -15,11 +15,17 @@
           "value": 255
         },
         {
-          "frame": 1,
+          "frame": 0.5,
           "value": 0
         }
       ]
     }
   },
-  "events": []
+  "events": [
+    {
+      "frame": 0.5,
+      "func": "onFinishHideStopImg",
+      "params": []
+    }
+  ]
 }

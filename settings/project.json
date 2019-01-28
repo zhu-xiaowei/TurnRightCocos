@@ -25,11 +25,17 @@
   "design-resolution-width": 1080,
   "excluded-modules": [
     "TiledMap",
+    "Spine Skeleton",
+    "DragonBones",
+    "RichText",
+    "Toggle",
+    "VideoPlayer",
+    "WebView",
     "Physics",
     "3D"
   ],
-  "fit-height": true,
-  "fit-width": false,
+  "fit-height": false,
+  "fit-width": true,
   "group-list": [
     "default",
     "car",
@@ -41,6 +47,5 @@
     "width": 960
   },
   "use-customize-simulator": false,
-  "use-project-simulator-setting": false,
-  "start-scene": "current"
+  "use-project-simulator-setting": false
 }

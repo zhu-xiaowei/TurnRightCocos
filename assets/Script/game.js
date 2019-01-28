@@ -51,10 +51,6 @@ cc.Class({
             default: null,
             type: cc.Node
         },
-        bestScoreTv: {
-            default: null,
-            type: cc.Node
-        },
         rankImg: {
             default: null,
             type: cc.Node
@@ -83,8 +79,7 @@ cc.Class({
         cc.view.enableAntiAlias(true);
         cc.macro.ENABLE_WEBGL_ANTIALIAS = true;
         cc.view.enableRetina(true);
-        //切换排行榜时当前场景不被销毁
-        cc.game.addPersistRootNode(this.node);
+        this.bestScore = 0;
         //初始化游戏
         this.initGame();
     },
@@ -102,6 +97,7 @@ cc.Class({
         this.touchNumber = 0;
         //连续perfect的次数
         this.perfectNumber = 0;
+
 
         //初始化关闭和隐藏
         this.startLayout.active = false;
@@ -121,6 +117,7 @@ cc.Class({
         this.progressCircle.getComponent('progressCircle').game = this;
         this.stopImg.getComponent('stopImg').game = this;
         this.startImg.getComponent('startImg').game = this;
+        this.bestScoreLayout.getComponent('bestScoreLayout').game = this;
         this.scoreLine.getComponent('scoreLine').initScoreLine();
 
         //显示开始游戏文字
@@ -131,9 +128,16 @@ cc.Class({
                 this.setStartTextPosition();
             }, 0.2);
         }
+        //请求完成之后再展示
+        if (this.bestScore > 0) {
+            this.showBestScore(this.bestScore);
+        } else {
+            this.showBestScore(this.getLocalBestScore());
+        }
         this.startText.getComponent('startText').show();
         //排行榜出现
         this.rankImg.getComponent('rankImg').listening();
+
     },
 
     //初始化开始游戏的文字
@@ -182,11 +186,11 @@ cc.Class({
         //更新进度条
         this.updateCircleProgress();
         //显示暂停按钮
-        this.stopImg.getComponent('stopImg').listening();
+        // this.stopImg.getComponent('stopImg').listening();
         //关闭排行显示
         this.rankImg.getComponent('rankImg').hideRankImg();
         //关闭最高分显示
-        this.bestScoreLayout.active = false;
+        this.bestScoreLayout.getComponent('bestScoreLayout').hideBestScoreLayout();
     },
 
 
@@ -267,10 +271,17 @@ cc.Class({
         this.gameStatus = -1;
         //隐藏暂停
         this.stopImg.getComponent('stopImg').hideStopImg();
+        //更新本地分数
+        if (this.bestScore < this.totalScore) {
+            this.bestScore = this.totalScore;
+            this.storeBestScore(this.bestScore);
+        }
+
         //显示排行榜
         this.scheduleOnce(function () {
             this.initGame();
         }, 1);
+
     },
 
 
@@ -283,4 +294,58 @@ cc.Class({
         this.node.off(cc.Node.EventType.TOUCH_START, this.eventDown, this);
         this.node.off(cc.Node.EventType.TOUCH_END, this.eventUp, this);
     },
+
+
+
+
+    //展示最高分 
+    showBestScore: function (score) {
+        //直接展示传入的最高分
+        this.bestScoreLayout.getComponent('bestScoreLayout').showBestScoreLayout(score);
+    },
+
+    //存储最高分到本地缓存
+    storeBestScore: function (score) {
+        try {
+            console.log("storeBestScore :" + score);
+            wx.setStorageSync('bestScore', score + '');
+        } catch (e) {
+            console.log("setStorageSync fail" + e);
+        }
+    },
+
+
+
+    //获取本地缓存最高分 未获取到则返回0
+    getLocalBestScore: function () {
+        try {
+            const value = window.wx.getStorageSync('bestScore');
+            if (value) {
+                if (value > this.totalScore) {
+                    return value;
+                } else {
+                    return this.totalScore;
+                }
+            } else {
+                console.log("value is null ");
+            }
+        } catch (e) {
+            console.log("get local best score failed" + e);
+        }
+        return 0;
+    },
+
+    //上传最高分到微信
+    upLoadBestScore: function (score) {
+
+    },
+
+    submitScore(score) {
+        window.wx.postMessage({
+            messageType: 3,
+            MAIN_MENU_NUM: "x1",
+            score: score,
+        });
+    },
+
 });

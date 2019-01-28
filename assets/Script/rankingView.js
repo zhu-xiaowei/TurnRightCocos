@@ -74,7 +74,7 @@ cc.Class({
         }
     },
 
-    submitScoreButtonFunc(){
+    submitScoreButtonFunc(score){
         let score = 123;
         if (CC_WECHATGAME) {
             window.wx.postMessage({
@@ -85,5 +85,9 @@ cc.Class({
         } else {
             cc.log("提交得分: x1 : " + score)
         }
+    },
+
+    backToMainGame(){
+        cc.director.loadScene('main');
     },
 });

@@ -7,7 +7,7 @@ cc.Class({
 
     // LIFE-CYCLE CALLBACKS:
 
-    listening: function () {
+    showStopImg: function () {
         this.node.active = true;
         var anim = this.getComponent(cc.Animation);
         anim.play();
@@ -18,6 +18,11 @@ cc.Class({
     hideStopImg: function () {
         var anim = this.getComponent(cc.Animation);
         anim.play('hideStopImg');
+    },
+
+    //动画结束之后设置active状态
+    onFinishHideStopImg: function () {
+        this.node.active = false;
     },
 
     eventDown: function (event) {
