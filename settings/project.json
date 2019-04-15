@@ -25,10 +25,7 @@
   "design-resolution-width": 1080,
   "excluded-modules": [
     "TiledMap",
-    "Spine Skeleton",
     "DragonBones",
-    "RichText",
-    "Toggle",
     "VideoPlayer",
     "WebView",
     "Physics",

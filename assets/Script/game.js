@@ -275,7 +275,7 @@ cc.Class({
         if (this.bestScore < this.totalScore) {
             this.bestScore = this.totalScore;
             this.storeBestScore(this.bestScore);
-            //通知开放数据域上传用户分数
+            //通知开放数据域上传用户分数 打包时运行
             this.submitScore(this.bestScore);
         }
 
@@ -337,11 +337,7 @@ cc.Class({
         return 0;
     },
 
-    //上传最高分到微信
-    upLoadBestScore: function (score) {
-
-    },
-
+    //发送消息到开放数据域 上传最高分到微信
     submitScore(score) {
         window.wx.postMessage({
             messageType: 3,
