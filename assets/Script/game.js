@@ -278,6 +278,7 @@ cc.Class({
             //通知开放数据域上传用户分数 打包时运行
             this.submitScore(this.bestScore);
         }
+        window.wx.vibrateLong()
 
         //显示排行榜
         this.scheduleOnce(function () {
